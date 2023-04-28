@@ -12,7 +12,7 @@ Route::resource('/records', RecordController::class)->except(['index', 'show'])-
 Route::resource('/records', RecordController::class)->only('show');
 
 // ChatGPT
-Route::post('/record/advice', [ChatGPTController::class, 'getAdvice'])->name('chatgpt.getAdvice')->middleware('auth');
+Route::get('/records/{record}/advice', [ChatGPTController::class, 'getAdvice'])->name('chatgpt.getAdvice')->middleware('auth');
 
 // いいね
 Route::prefix('/records')
