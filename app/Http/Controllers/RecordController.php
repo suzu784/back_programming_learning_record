@@ -108,4 +108,16 @@ class RecordController extends Controller
         $this->record_service->update($request, $record);
         return redirect()->route('top');
     }
+
+    /**
+     * 学習記録を削除してトップページにリダイレクト
+     *
+     * @param Record $record
+     * @return redirect トップページ
+     */
+    public function destroy(Record $record)
+    {
+        $record->delete();
+        return redirect()->route('top');
+    }
 }
