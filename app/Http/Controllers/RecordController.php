@@ -79,4 +79,33 @@ class RecordController extends Controller
     {
         return view('records.create');
     }
+
+    /**
+     * 学習記録編集フォーム画面に遷移
+     *
+     * @return view 学習記録編集画面
+     */
+    public function edit($record)
+    {
+        $record = Record::find($record);
+        $duration = $record->duration;
+        $hours = $this->record_service->convertTotalMinutesToHours($duration);
+        $minutes = $this->record_service->convertTotalMinutesToMinutes($duration);
+        return view('records.edit', compact(
+            'record',
+            'hours',
+            'minutes',
+        ));
+    }
+
+    /**
+     * 学習記録を更新してトップページにリダイレクト
+     *
+     * @return redirect トップページ
+     */
+    public function update(Request $request, $record)
+    {
+        $this->record_service->update($request, $record);
+        return redirect()->route('top');
+    }
 }

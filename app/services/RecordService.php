@@ -86,4 +86,19 @@ class RecordService
       'duration' => $total_minute,
     ]);
   }
+
+  /**
+   * 学習記録を更新
+   *
+   * @param Request $request
+   * @param Record $record
+   * @return void
+   */
+  public function update($request, $record)
+  {
+    $record = Record::find($record);
+    $duration = $request->input('duration');
+    $total_minute = $this->convertHHMMToTotalMinute($duration);
+    $record->fill(array_merge($request->all(), ['duration' => $total_minute]))->save();
+  }
 }
