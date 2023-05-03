@@ -4,7 +4,15 @@ use App\Http\Controllers\ChatGPTController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\RecordController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+
+// ユーザー認証
+Auth::routes();
+
+// プロフィール
+Route::resource('/users', UserController::class)->only(['show', 'edit', 'update']);
+Route::get('/users/{user}/likes', [UserController::class, 'likes'])->name('users.likes');
 
 // プログラミング学習
 Route::get('/', [RecordController::class, 'index'])->name('top');
@@ -26,6 +34,3 @@ Route::prefix('/records')
 
 // コメント
 Route::resource('/records/comments', CommentController::class)->only(['create', 'edit', 'update', 'destroy'])->middleware('auth');
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
