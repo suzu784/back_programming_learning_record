@@ -12,7 +12,7 @@ class UserController extends Controller
      *
      * @return view プロフィール画面
      */
-    public function show(User $user)
+    public function showRecords(User $user)
     {
         return view('users.show', compact('user'));
     }
@@ -22,7 +22,7 @@ class UserController extends Controller
      *
      * @return view プロフィール画面
      */
-    public function likes(User $user)
+    public function showLikes(User $user)
     {
         return view('users.likes', compact('user'));
     }

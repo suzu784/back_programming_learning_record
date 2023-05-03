@@ -11,8 +11,12 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 // プロフィール
-Route::resource('/users', UserController::class)->only(['show', 'edit', 'update']);
-Route::get('/users/{user}/likes', [UserController::class, 'likes'])->name('users.likes');
+Route::prefix('/users')->controller(UserController::class)->name('users.')->group(function() {
+    Route::get('{user}', 'showRecords')->name('showRecords');
+    Route::get('/{user}/likes', 'showLikes')->name('showLikes');
+    Route::get('/{user}/edit', 'editGoal')->name('editGoal');
+    Route::put('/{user}', 'updateGoal')->name('updateGoal');
+});
 
 // プログラミング学習
 Route::get('/', [RecordController::class, 'index'])->name('top');
