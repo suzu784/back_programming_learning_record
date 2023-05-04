@@ -22,12 +22,13 @@
 <body>
     <x-header></x-header>
     <div class="container">
-        <main class="py-4">
-            <div id="app"></div>
-            @yield('content')
+        <div id="app">
+            <main class="py-4">
+                @yield('content')
             </main>
-        <x-footer></x-footer>
+        </div>
     </div>
+    <x-footer></x-footer>
 </body>
 
 </html>
