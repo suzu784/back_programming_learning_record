@@ -26,4 +26,18 @@ class UserController extends Controller
     {
         return view('users.likes', compact('user'));
     }
+
+    /**
+     * ユーザーの目標を更新
+     *
+     * @param Request $request リクエスト
+     * @return void
+     */
+    public function updateGoal(Request $request)
+    {
+        $user = $request->user();
+        $goal = $request->goal;
+        $user->goal = $goal;
+        $user->save();
+    }
 }
