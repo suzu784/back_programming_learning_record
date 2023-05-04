@@ -1,6 +1,6 @@
-import './bootstrap';
+import "./bootstrap";
 import { createApp } from "vue";
-import App from "./components/App.vue";
+import GoalForm from "./components/GoalForm.vue";
 
-const app = createApp(App);
-app.mount("#app");
+const app = createApp(GoalForm);
+app.mount("#goal-form");
