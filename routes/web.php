@@ -14,8 +14,7 @@ Auth::routes();
 Route::prefix('/users')->controller(UserController::class)->name('users.')->group(function() {
     Route::get('{user}', 'showRecords')->name('showRecords');
     Route::get('/{user}/likes', 'showLikes')->name('showLikes');
-    Route::get('/{user}/edit', 'editGoal')->name('editGoal');
-    Route::put('/{user}', 'updateGoal')->name('updateGoal');
+    Route::put('/{user}', 'updateGoal')->name('updateGoal')->middleware('auth');
 });
 
 // プログラミング学習
