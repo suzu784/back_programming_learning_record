@@ -65,6 +65,15 @@ return new class extends Migration
             $table->foreign('tag_id')->references('id')->on('tags');
             $table->timestamps();
         });
+
+        Schema::create('templates', function (Blueprint $table) {
+            $table->id();
+            $table->bigInteger('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->string('name');
+            $table->text('content');
+            $table->timestamps();
+        });
     }
 
     /**
