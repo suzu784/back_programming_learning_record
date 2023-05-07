@@ -4,6 +4,7 @@ use App\Http\Controllers\ChatGPTController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\RecordController;
+use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,9 @@ Route::prefix('/users')->controller(UserController::class)->name('users.')->grou
 Route::get('/', [RecordController::class, 'index'])->name('top');
 Route::resource('/records', RecordController::class)->except(['index', 'show'])->middleware('auth');
 Route::resource('/records', RecordController::class)->only('show');
+
+// テンプレート
+Route::get('/api/templates', [TemplateController::class, 'index'])->name('templates.index')->middleware('auth');
 
 // ChatGPT
 Route::get('/records/{record}/advice', [ChatGPTController::class, 'getAdvice'])->name('chatgpt.getAdvice')->middleware('auth');
