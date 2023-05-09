@@ -24,18 +24,6 @@
                 </div>
             </div>
             <div class="form-group mt-3">
-                <ul class="nav nav-tabs nav-justified">
-                    <li class="nav-item">
-                        <a class="nav-link text-muted active" href="">
-                            write
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-muted" href="">
-                            preview
-                        </a>
-                    </li>
-                </ul>
                 <div id="text-area-modal">
                     {{ old('body', isset($record) ? $record->body : '') }}
                 </div>
