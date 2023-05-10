@@ -15,6 +15,7 @@
                     <a class="nav-link" href="{{ route('login') }}">ログイン</a>
                     <a class="nav-link" href="{{ route('register') }}">新規登録</a>
                     @else
+                    <a class="nav-link" href="{{ route('users.myDrafts', ['user' => Auth::user()]) }}">下書き一覧</a>
                     <a class="nav-link" href="{{ route('records.create') }}">学習を記録</a>
                     <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                 document.getElementById('logout-form').submit();">

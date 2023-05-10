@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('title');
             $table->text('body');
+            $table->boolean('is_draft')->default(false);
             $table->date('learning_date');
             $table->unsignedBigInteger('duration');
             $table->timestamps();
