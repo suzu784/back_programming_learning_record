@@ -28,6 +28,9 @@
                     <a class="nav-link" href="{{ route('records.create') }}">学習を記録</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('users.showRecords', ['user' => Auth::user()]) }}">マイページ</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                 document.getElementById('logout-form').submit();">
                         ログアウト
