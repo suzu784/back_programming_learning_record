@@ -8,6 +8,16 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     /**
+     * ユーザーの下書き一覧を表示
+     *
+     * @return view 下書き一覧
+     */
+    public function myDrafts(User $user)
+    {
+        return view('users.my_drafts', compact('user'));
+    }
+
+    /**
      * プロフィール画面の記事を表示
      *
      * @return view プロフィール画面

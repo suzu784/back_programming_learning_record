@@ -42,9 +42,8 @@ class RecordController extends Controller
      *
      * @return view 学習詳細画面
      */
-    public function show($record)
+    public function show(Record $record)
     {
-        $record = $this->record_service->show($record);
         $duration = $record->duration;
         $hours = $this->record_service->convertTotalMinutesToHours($duration);
         $minutes = $this->record_service->convertTotalMinutesToMinutes($duration);
@@ -85,9 +84,8 @@ class RecordController extends Controller
      *
      * @return view 学習記録編集画面
      */
-    public function edit($record)
+    public function edit(Record $record)
     {
-        $record = Record::find($record);
         $duration = $record->duration;
         $hours = $this->record_service->convertTotalMinutesToHours($duration);
         $minutes = $this->record_service->convertTotalMinutesToMinutes($duration);
@@ -103,7 +101,7 @@ class RecordController extends Controller
      *
      * @return redirect トップページ
      */
-    public function update(Request $request, $record)
+    public function update(Request $request, Record $record)
     {
         $this->record_service->update($request, $record);
         return redirect()->route('top');

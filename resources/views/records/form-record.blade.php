@@ -30,6 +30,11 @@
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">{{ isset($record) ? '更新' : '登録' }}</button>
+                @if(isset($record) && $record->is_draft === true)
+                <button type="submit" name="is_draft" class="btn btn-success">下書き保存</button>
+                @elseif(!isset($record))
+                <button type="submit" name="is_draft" class="btn btn-success">下書き保存</button>
+                @endif
             </div>
         </form>
     </div>

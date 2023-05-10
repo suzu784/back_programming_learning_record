@@ -54,20 +54,8 @@ class RecordService
    */
   public function index()
   {
-    $records = Record::orderBy('created_at', 'desc')->get();
+    $records = Record::NotDraft()->orderBy('created_at', 'desc')->get();
     return $records;
-  }
-
-  /**
-   * 学習記録詳細を取得
-   *
-   * @param Record $record
-   * @return $record 学習記録
-   */
-  public function show($record)
-  {
-    $record = Record::where('id', $record)->first();
-    return $record;
   }
 
   /**
@@ -76,12 +64,13 @@ class RecordService
    * @param Request $request リクエスト
    * @return void
    */
-  public function store($request, $total_minute)
+  public function store(Request $request, $total_minute)
   {
     Record::create([
       'user_id' => Auth::id(),
       'title' => $request->input('title'),
       'body' => $request->input('body'),
+      'is_draft' => $request->has('is_draft'),
       'learning_date' => $request->input('learning_date'),
       'duration' => $total_minute,
     ]);
@@ -94,11 +83,15 @@ class RecordService
    * @param Record $record
    * @return void
    */
-  public function update($request, $record)
+  public function update(Request $request, Record $record)
   {
-    $record = Record::find($record);
     $duration = $request->input('duration');
     $total_minute = $this->convertHHMMToTotalMinute($duration);
-    $record->fill(array_merge($request->all(), ['duration' => $total_minute]))->save();
+    $record->fill(array_merge($request->except('is_draft'), ['duration' => $total_minute]))->save();
+    if ($request->has('is_draft')) { // 下書き保存の場合
+      return;
+    }
+    $record->is_draft = false; // 更新の場合
+    $record->save();
   }
 }

@@ -12,10 +12,13 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 // プロフィール
-Route::prefix('/users')->controller(UserController::class)->name('users.')->group(function() {
-    Route::get('{user}', 'showRecords')->name('showRecords');
-    Route::get('/{user}/likes', 'showLikes')->name('showLikes');
-    Route::put('/{user}', 'updateGoal')->name('updateGoal')->middleware('auth');
+Route::controller(UserController::class)->name('users.')->group(function () {
+    Route::get('/records/users/{user}/drafts', 'myDrafts')->name('myDrafts');
+    Route::prefix('/users')->group(function () {
+        Route::get('{user}', 'showRecords')->name('showRecords');
+        Route::get('/{user}/likes', 'showLikes')->name('showLikes');
+        Route::put('/{user}', 'updateGoal')->name('updateGoal')->middleware('auth');
+    });
 });
 
 // プログラミング学習
