@@ -4,7 +4,7 @@
 <p>{{ $message }}</p>
 @else
 <div class="row justify-content-center">
-  <div class="col-sm-12 col-md-11 col-lg-10">
+  <div class="col-sm-12 col-md-11 col-lg-10 offset-lg-1">
     <h1 class="mb-4">学習記録一覧</h1>
     <table class="table table-borderless">
       <tbody>
