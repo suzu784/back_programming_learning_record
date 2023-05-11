@@ -47,12 +47,12 @@ class RecordController extends Controller
         $duration = $record->duration;
         $hours = $this->record_service->convertTotalMinutesToHours($duration);
         $minutes = $this->record_service->convertTotalMinutesToMinutes($duration);
-        $generatedText = session('generatedText');
+        $generated_text = $this->record_service->getGeneratedText($record);
         return view('records.show', compact(
             'record',
             'hours',
             'minutes',
-            'generatedText',
+            'generated_text',
         ));
     }
 

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Record;
+use App\Models\ChatGPT;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -45,6 +46,23 @@ class RecordService
     $minutes = $duration_arr[1]; // 分を取得する
     $total_minute = ($hours * 60) + $minutes; // 時間を60で乗じて分に変換し、分と合算する
     return $total_minute;
+  }
+
+  /**
+   * 学習記録に紐づくChatGPTのレビューを取得
+   *
+   * @param Record $record 学習記録
+   * @return $generated_text レビュー
+   */
+  public function getGeneratedText(Record $record)
+  {
+    $chat_gpt_record = ChatGPT::where('record_id', $record->id)->first();
+    if($chat_gpt_record) {
+      $generated_text = $chat_gpt_record->content;
+      return $generated_text;
+    } else {
+      return null;
+    }
   }
 
   /**

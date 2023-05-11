@@ -2,11 +2,18 @@
 
 namespace App\Services;
 
+use App\Models\ChatGPT;
 use App\Models\Record;
 use GuzzleHttp\Client;
 
 class ChatGPTService
 {
+  /**
+   * ChatGPTによるレビューを生成
+   *
+   * @param Record $record 学習記録
+   * @return $generated_text レビュー
+   */
   public function handle(Record $record)
   {
     $client = new Client([
@@ -21,12 +28,32 @@ class ChatGPTService
       'json' => [
         'model' => 'text-davinci-003',
         'prompt' => $record->body,
-        'max_tokens' => 600,
       ],
     ]);
 
     $result = json_decode($response->getBody()->getContents(), true);
     $generated_text = $result['choices'][0]['text'];
     return $generated_text;
+  }
+
+  /**
+   * ChatGPTテーブルにデータを保存・更新
+   *
+   * @param Record $record 学習記録
+   * @param $generated_text レビュー
+   * @return void
+   */
+  public function saveGeneratedText(Record $record, $generated_text)
+  {
+    $chat_gpt_record = ChatGPT::where('record_id', $record->id)->first();
+    if ($chat_gpt_record) {
+      $chat_gpt_record->content = $generated_text;
+      $chat_gpt_record->save();
+    } else {
+      ChatGPT::create([
+        'record_id' => $record->id,
+        'content' => $generated_text,
+      ]);
+    }
   }
 }

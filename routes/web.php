@@ -30,7 +30,7 @@ Route::resource('/records', RecordController::class)->only('show');
 Route::get('/api/templates', [TemplateController::class, 'index'])->name('templates.index')->middleware('auth');
 
 // ChatGPT
-Route::get('/records/{record}/advice', [ChatGPTController::class, 'getAdvice'])->name('chatgpt.getAdvice')->middleware('auth');
+Route::get('/records/{record}/review', [ChatGPTController::class, 'getReview'])->name('chatgpt.getReview')->middleware('auth');
 
 // いいね
 Route::prefix('/records')
