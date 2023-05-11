@@ -26,9 +26,10 @@ class ChatGPTController extends Controller
      * @param Record $record 学習記録
      * @return redirect 学習記録の詳細ページ
      */
-    public function getAdvice(Record $record)
+    public function getReview(Record $record)
     {
         $generated_text = $this->chat_gpt_service->handle($record);
-        return redirect()->route('records.show', ['record' => $record])->with('generatedText', $generated_text);
+        $this->chat_gpt_service->saveGeneratedText($record, $generated_text);
+        return redirect()->route('records.show', ['record' => $record]);
     }
 }

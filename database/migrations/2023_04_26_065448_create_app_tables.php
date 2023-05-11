@@ -25,7 +25,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('chatgpts', function (Blueprint $table) {
+        Schema::create('chat_g_p_t_s', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('record_id')->unsigned();
             $table->foreign('record_id')->references('id')->on('records');
@@ -84,7 +84,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('chatgpts');
+        Schema::dropIfExists('chat_g_p_t_s');
         Schema::dropIfExists('likes');
         Schema::dropIfExists('comments');
         Schema::dropIfExists('tag_records');
