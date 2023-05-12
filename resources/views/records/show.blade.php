@@ -33,6 +33,10 @@
         @endif
       </div>
     </div>
+    <div id="like-button">
+      <record-like :record-id="@json($record->id)" :initial-is-liked="@json($record->isLikedBy(Auth::user()))"
+        :initial-count-likes="@json($record->countLikes())"></record-like>
+    </div>
   </div>
 </div>
 @if(isset($generated_text))
