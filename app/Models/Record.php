@@ -49,6 +49,13 @@ class Record extends Model
         return $this->belongsToMany(User::class, 'likes')->withTimestamps();
     }
 
+    public function comments(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'comments')
+            ->withTimestamps()
+            ->withPivot('id', 'content');
+    }
+
     /**
      * 学習記録にいいねされているかを判定
      *

@@ -4,6 +4,7 @@ import Vuex from "vuex";
 import GoalForm from "./components/GoalForm.vue";
 import Textarea from "./components/Textarea.vue";
 import RecordLike from "./components/RecordLike.vue";
+import CommentForm from "./components/CommentForm.vue";
 
 const goalFormElement = document.querySelector("#goal-form");
 if(goalFormElement) {
@@ -42,4 +43,14 @@ if(likeButtonElement) {
         likeButtonApp.mount("#like-button");
     };
     LikeButtonApp();
+}
+
+const commentFormElement = document.querySelector("#comment-form");
+if(commentFormElement) {
+    const CommentFormApp = async () => {
+        const commentFormApp = createApp({});
+        commentFormApp.component("comment-form", CommentForm);
+        commentFormApp.mount("#comment-form");
+    }
+    CommentFormApp();
 }

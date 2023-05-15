@@ -53,4 +53,7 @@
   </div>
 </div>
 @endif
+<div id="comment-form">
+  <comment-form :record-id="@json($record->id)"></comment-form>
+</div>
 @endsection

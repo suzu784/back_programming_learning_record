@@ -43,4 +43,5 @@ Route::prefix('/records')
     });
 
 // コメント
-Route::resource('/records/comments', CommentController::class)->only(['create', 'edit', 'update', 'destroy'])->middleware('auth');
+Route::resource('/records/comments', CommentController::class)->except(['index', 'show', 'create', 'edit'])->middleware('auth');
+Route::get('/comments/{record}', [CommentController::class, 'getComments'])->name('comments.getComments');
