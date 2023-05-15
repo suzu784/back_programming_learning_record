@@ -6,7 +6,7 @@
   </div>
   <div class="col-md-10 col-lg-8">
     @include('users.tabs', ['hasRecords' => false, 'hasLikes' => true])
-    @include('records.table')
+    @include('records.table', ['hasRecords' => false, 'hasLikes' => true])
   </div>
 </div>
 @endsection
