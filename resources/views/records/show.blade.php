@@ -11,6 +11,9 @@
             <form action="{{ route('records.destroy', $record->id) }}" method="POST" style="display:inline">
               @csrf
               @method('DELETE')
+              @foreach($record->tags as $tag)
+              <input type="hidden" name="tagId" value="{{ $tag->id}}">
+              @endforeach
               <button type="submit" class="btn btn-danger" onclick="return confirm('本当に削除しますか？');"><i
                   class="fas fa-trash"></i></button>
             </form>
@@ -23,6 +26,9 @@
           {{ $record->user->name }} さん
         </p>
         <p class="card-text">学習時間：{{ $hours }} 時間 {{ $minutes }} 分</p>
+        @foreach($record->tags as $tag)
+        <span class="card-text">{{ $tag->name}}</span>
+        @endforeach
         <p class="card-text">{{ $record->body }}</p>
         @if(Auth::id() === $record->user_id)
         <div class="mt-3">

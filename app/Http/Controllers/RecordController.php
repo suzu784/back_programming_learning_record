@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Record;
 use Illuminate\Http\Request;
 use App\Services\RecordService;
-use DateTime;
-use Illuminate\Support\Facades\Auth;
 
 class RecordController extends Controller
 {
@@ -110,11 +108,13 @@ class RecordController extends Controller
     /**
      * 学習記録を削除してトップページにリダイレクト
      *
-     * @param Record $record
+     * @param Record $record 学習記録
+     * @param Request $request リクエスト
      * @return redirect トップページ
      */
-    public function destroy(Record $record)
+    public function destroy(Request $request, Record $record)
     {
+        $this->record_service->destroyTags($request, $record);
         $record->delete();
         return redirect()->route('top');
     }
