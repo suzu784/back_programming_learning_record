@@ -16,6 +16,18 @@
                     <input type="time" name="duration" id="duration" class="form-control"
                         value="{{ old('duration', isset($record) ? sprintf('%02d:%02d', $hours, $minutes) : '00:00') }}">
                 </div>
+                <div class="col-md-8">
+                    <label for="tagName">タグ:</label>
+                    @if(isset($record) && $record->tags->first())
+                    @foreach($record->tags as $tag)
+                    <input type="hidden" name="tagId[]" value="{{ $tag->id}}">
+                    <input type="text" name="tagName[]" id="tagName" class="form-control"
+                        value="{{ old('tagName', $tag->name) }}">
+                    @endforeach
+                    @else
+                    <input type="text" name="tagName" id="tagName" class="form-control" value="{{ old('tagName') }}">
+                    @endif
+                </div>
             </div>
             <div class="form-group row mt-3">
                 <div class="col-md-12">

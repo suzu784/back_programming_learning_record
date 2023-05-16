@@ -26,7 +26,10 @@
         </tr>
         <tr>
           <td>
-            {{ $record->body }}
+            @foreach($record->tags as $tag)
+            <span>{{ $tag->name }}</span>
+            @endforeach
+            <p>{{ $record->body }}</p>
             <hr>
           </td>
         </tr>
