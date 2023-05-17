@@ -67,7 +67,37 @@ class RecordService
   }
 
   /**
-   * タグを生成
+   * カンマを区切って配列に変換
+   *
+   * @param $tag_name タグ
+   * @return $tag_array タグ(配列)
+   */
+  public function stringToArray($tag_name)
+  {
+    $tag_array = explode(',', $tag_name);
+    return $tag_array;
+  }
+
+  /**
+   * タグの作成または取得、学習記録との関連付けを行う
+   *
+   * @param Request $request リクエスト
+   * @param Record $record 学習記録
+   * @return void
+   */
+  public function processTags(Request $request, Record $record)
+  {
+    $tag_name = $request->input('tagName');
+    $tag_array = $this->stringToArray($tag_name);
+
+    foreach ($tag_array as $name) {
+      $tag = Tag::firstOrCreate(['name' => $name]);
+      $record->tags()->attach($tag->id);
+    }
+  }
+
+  /**
+   * 学習記録のタグを生成
    *
    * @param Request $request リクエスト
    * @param Record $record 学習記録
@@ -75,16 +105,11 @@ class RecordService
    */
   public function createTags(Request $request, Record $record)
   {
-    $tag_name = $request->input('tagName');
-    $tag = Tag::where('name', $tag_name)->first();
-    if (is_null($tag)) {
-      $tag = Tag::create(['name' => $request->input('tagName')]);
-    }
-    $record->tags()->attach($tag->id);
+    $this->processTags($request, $record);
   }
 
   /**
-   * タグを更新
+   * 学習記録のタグを更新
    *
    * @param Request $request リクエスト
    * @param Record $record 学習記録
@@ -92,18 +117,8 @@ class RecordService
    */
   public function updateTags(Request $request, Record $record)
   {
-    $this->destroyTags($request, $record); // リレーションを一旦解除
-    $tagIds = $request->input('tagId');
-    $tagNames = $request->input('tagName');
-
-    foreach ($tagIds as $index => $tagId) {
-      $tag = Tag::find($tagId);
-      if ($tag && !empty($tagNames[$index])) {
-        $tag->name = $tagNames[$index];
-        $tag->save();
-        $record->tags()->attach($tagId); // リレーションを再度生成
-      }
-    }
+    $this->destroyTags($request, $record);
+    $this->processTags($request, $record);
   }
 
   /**

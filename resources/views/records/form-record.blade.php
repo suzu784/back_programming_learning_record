@@ -21,11 +21,10 @@
                     @if(isset($record) && $record->tags->first())
                     @foreach($record->tags as $tag)
                     <input type="hidden" name="tagId[]" value="{{ $tag->id}}">
-                    <input type="text" name="tagName[]" id="tagName" class="form-control"
-                        value="{{ old('tagName', $tag->name) }}">
+                    <div id="tag-input"></div>
                     @endforeach
                     @else
-                    <input type="text" name="tagName" id="tagName" class="form-control" value="{{ old('tagName') }}">
+                    <div id="tag-input"></div>
                     @endif
                 </div>
             </div>

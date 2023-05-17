@@ -22,7 +22,10 @@
         </tr>
         <tr>
           <td>
-            {{ $draft->body }}
+            @foreach($draft->tags as $tag)
+            <span>{{ $tag->name}}</span>
+            @endforeach
+            <p>{{ $draft->body }}</p>
             <hr>
           </td>
         </tr>
