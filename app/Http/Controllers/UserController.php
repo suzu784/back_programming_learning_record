@@ -14,7 +14,8 @@ class UserController extends Controller
      */
     public function myDrafts(User $user)
     {
-        return view('users.my_drafts', compact('user'));
+        $my_drafts = $user->myDrafts()->paginate(8);
+        return view('users.my_drafts', compact('user', 'my_drafts'));
     }
 
     /**
@@ -24,7 +25,8 @@ class UserController extends Controller
      */
     public function showRecords(User $user)
     {
-        return view('users.show', compact('user'));
+        $records = $user->records()->paginate(8);
+        return view('users.show', compact('user', 'records'));
     }
 
     /**
@@ -34,7 +36,8 @@ class UserController extends Controller
      */
     public function showLikes(User $user)
     {
-        return view('users.likes', compact('user'));
+        $likes = $user->likes()->paginate(8);
+        return view('users.likes', compact('user', 'likes'));
     }
 
     /**

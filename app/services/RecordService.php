@@ -140,7 +140,7 @@ class RecordService
    */
   public function index()
   {
-    $records = Record::NotDraft()->orderBy('created_at', 'desc')->get();
+    $records = Record::NotDraft()->orderBy('created_at', 'desc')->paginate(8);
     return $records;
   }
 
