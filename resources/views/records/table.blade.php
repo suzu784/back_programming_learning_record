@@ -4,7 +4,7 @@
     <table class="table table-borderless">
       <tbody>
         @if($hasRecords === true && $hasLikes === false)
-        @foreach($user->records as $record)
+        @foreach($records as $record)
         <tr class="h5">
           <td>
             {{ $record->learning_date }}
@@ -50,5 +50,6 @@
         @endif
       </tbody>
     </table>
+    {{ isset($records) ? $records->links() : $likes->links()}}
   </div>
 </div>

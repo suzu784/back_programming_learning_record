@@ -6,7 +6,7 @@
     <hr>
     <table class="table table-borderless">
       <tbody>
-        @foreach ($user->myDrafts as $draft)
+        @foreach ($my_drafts as $draft)
         <tr class="h5">
           <td>
             {{ $draft->learning_date }}
@@ -32,6 +32,7 @@
         @endforeach
       </tbody>
     </table>
+    {{ $my_drafts->links() }}
   </div>
 </div>
 @endsection
