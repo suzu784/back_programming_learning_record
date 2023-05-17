@@ -33,8 +33,7 @@
         @if(Auth::id() === $record->user_id)
         <div class="mt-3">
           <a href="{{route('chatgpt.getReview', ['record' => $record->id])}}" class="btn btn-primary"
-            onclick="if('{{ e($generated_text) }}') return confirm('レビューを更新しますか？');"><i
-              class="fas fa-robot"></i>ChatGPTレビュー</a>
+            onclick="showLoadingScreen()"><i class="fas fa-robot"></i>ChatGPTレビュー</a>
         </div>
         @endif
       </div>
@@ -45,6 +44,7 @@
     </div>
   </div>
 </div>
+@include('records.loading')
 @if(isset($generated_text))
 <div class="row mt-5">
   <div class="col-md-5 offset-md-2">
@@ -63,3 +63,11 @@
   <comment-form :record-id="@json($record->id)"></comment-form>
 </div>
 @endsection
+
+<script>
+  function showLoadingScreen() {
+  // ローディング画面を表示
+  const loadingOverlay = document.querySelector(".loading-overlay");
+  loadingOverlay.classList.add("show");
+  }
+</script>
