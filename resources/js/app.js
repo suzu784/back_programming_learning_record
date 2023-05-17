@@ -5,6 +5,7 @@ import GoalForm from "./components/GoalForm.vue";
 import Textarea from "./components/Textarea.vue";
 import RecordLike from "./components/RecordLike.vue";
 import CommentForm from "./components/CommentForm.vue";
+import TagInput from "./components/TagInput.vue";
 
 const goalFormElement = document.querySelector("#goal-form");
 if(goalFormElement) {
@@ -53,4 +54,10 @@ if(commentFormElement) {
         commentFormApp.mount("#comment-form");
     }
     CommentFormApp();
+}
+
+const tagInputElement = document.querySelector("#tag-input");
+if(tagInputElement) {
+    const tagInputApp = createApp(TagInput);
+    tagInputApp.mount("#tag-input");
 }
