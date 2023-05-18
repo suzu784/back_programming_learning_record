@@ -1,4 +1,4 @@
 @extends('layouts.app')
 @section('content')
-@include('records.form-record')
+@include('records.form_record')
 @endsection
