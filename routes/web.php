@@ -12,17 +12,19 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 // プロフィール
-Route::controller(UserController::class)->name('users.')->group(function () {
+Route::controller(UserController::class)->name('users.')->middleware('auth')->group(function () {
     Route::get('/records/users/{user}/drafts', 'myDrafts')->name('myDrafts');
     Route::prefix('/users')->group(function () {
         Route::get('{user}', 'showRecords')->name('showRecords');
         Route::get('/{user}/likes', 'showLikes')->name('showLikes');
-        Route::put('/{user}', 'updateGoal')->name('updateGoal')->middleware('auth');
+        Route::get('/{user}/studyAnalytics', 'showStudyAnalytics')->name('showStudyAnalytics');
+        Route::put('/{user}', 'updateGoal')->name('updateGoal');
     });
 });
 
 // プログラミング学習
 Route::get('/', [RecordController::class, 'index'])->name('top');
+Route::get('/records/getTotalStudyTime', [RecordController::class, 'getTotalStudyTime'])->name('records.getTotalStudyTime');
 Route::resource('/records', RecordController::class)->except(['index', 'show'])->middleware('auth');
 Route::resource('/records', RecordController::class)->only('show');
 

@@ -18,9 +18,11 @@
         "vue3-tags-input": "^1.0.11"
     },
     "dependencies": {
+        "chart.js": "^4.3.0",
         "install": "^0.13.0",
         "markdown-it": "^13.0.1",
         "npm": "^9.6.6",
+        "vue-chartkick": "^1.1.0",
         "vuex": "^4.1.0"
     }
 }

@@ -21,6 +21,7 @@ class UserController extends Controller
     /**
      * プロフィール画面の記事を表示
      *
+     * @param User $user ユーザー
      * @return view プロフィール画面
      */
     public function showRecords(User $user)
@@ -32,12 +33,24 @@ class UserController extends Controller
     /**
      * プロフィール画面のいいねした記事を表示
      *
+     * @param User $user ユーザー
      * @return view プロフィール画面
      */
     public function showLikes(User $user)
     {
         $likes = $user->likes()->paginate(8);
         return view('users.likes', compact('user', 'likes'));
+    }
+
+    /**
+     * プロフィール画面の学習記録の統計を表示
+     *
+     * @param User $user ユーザー
+     * @return view プロフィール画面
+     */
+    public function showStudyAnalytics(User $user)
+    {
+        return view('users.study_analytics', compact('user'));
     }
 
     /**

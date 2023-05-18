@@ -1,11 +1,14 @@
 import "./bootstrap";
+import "chartkick/chart.js";
 import { createApp } from "vue";
 import Vuex from "vuex";
+import VueChartkick from "vue-chartkick";
 import GoalForm from "./components/GoalForm.vue";
 import Textarea from "./components/Textarea.vue";
 import RecordLike from "./components/RecordLike.vue";
 import CommentForm from "./components/CommentForm.vue";
 import TagInput from "./components/TagInput.vue";
+import StudyAnalytics from "./components/StudyAnalytics.vue";
 
 const goalFormElement = document.querySelector("#goal-form");
 if(goalFormElement) {
@@ -60,4 +63,11 @@ const tagInputElement = document.querySelector("#tag-input");
 if(tagInputElement) {
     const tagInputApp = createApp(TagInput);
     tagInputApp.mount("#tag-input");
+}
+
+const studyAnalytics = document.querySelector("#study-analytics");
+if(studyAnalytics) {
+    const studyAnalyticsApp = createApp(StudyAnalytics);
+    studyAnalyticsApp.use(VueChartkick);
+    studyAnalyticsApp.mount("#study-analytics");
 }
