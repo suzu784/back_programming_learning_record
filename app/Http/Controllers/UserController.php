@@ -26,7 +26,7 @@ class UserController extends Controller
      */
     public function showRecords(User $user)
     {
-        $records = $user->records()->paginate(8);
+        $records = $user->records()->NotDraft()->paginate(8);
         return view('users.show', compact('user', 'records'));
     }
 
