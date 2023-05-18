@@ -5,8 +5,8 @@
     @include('users.user')
   </div>
   <div class="col-md-10 col-lg-8">
-    @include('users.tabs', ['hasRecords' => false, 'hasLikes' => true, 'hasStudyAnalytics' => false])
-    @include('records.table', ['hasRecords' => false, 'hasLikes' => true])
+    @include('users.tabs', ['hasRecords' => false, 'hasLikes' => false, 'hasStudyAnalytics' => true])
+    <div id="study-analytics"></div>
   </div>
 </div>
 @endsection

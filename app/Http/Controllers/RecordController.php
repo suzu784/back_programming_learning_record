@@ -21,6 +21,25 @@ class RecordController extends Controller
     }
 
     /**
+     * 1週間以内の1日あたりの合計学習時間
+     *
+     * @return void
+     */
+    public function getTotalStudyTime()
+    {
+        $learning_date = $this->record_service->getWeekDate();
+        $total_study_time = $this->record_service->getTotalStudyTime();
+
+        $return_array = [];
+        for($i = 0; $i < 7; $i++) {
+            $return_array[$learning_date[$i]] = $total_study_time[$i];
+        }
+        return [
+            $return_array
+        ];
+    }
+
+    /**
      * 学習記録一覧画面に遷移
      *
      * @return view 学習記録一覧画面

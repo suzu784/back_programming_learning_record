@@ -11,4 +11,10 @@
       いいね
     </a>
   </li>
+  <li class="nav-item">
+    <a class="nav-link text-muted {{ $hasStudyAnalytics ? 'active' : '' }}"
+      href="{{ route('users.showStudyAnalytics', ['user' => $user]) }}">
+      学習記録
+    </a>
+  </li>
 </ul>

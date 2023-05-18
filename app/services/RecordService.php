@@ -2,14 +2,63 @@
 
 namespace App\Services;
 
+use Carbon\Carbon;
 use App\Models\Tag;
 use App\Models\Record;
 use App\Models\ChatGPT;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class RecordService
 {
+  /**
+   * 1週間の日付を取得
+   *
+   * @return $week_date 1週間の日付
+   */
+  public function getWeekDate()
+  {
+    // 現在の日付を取得
+    $start_date = Carbon::today()->subDay(6);
+    // 1週間後の日付を計算
+    $end_date = $start_date->copy()->addDay(6);
+
+    // 1週間の日付を取得
+    $week_date = [];
+    while ($start_date->lte($end_date)) {
+      $week_date[] = $start_date->copy()->toDateString();
+      $start_date->addDay();
+    }
+    return $week_date;
+  }
+
+  /**
+   * 1日あたりの合計学習時間を取得
+   *
+   * @return $total_study_time 1日の合計学習時間
+   */
+  public function getTotalStudyTime()
+  {
+    $week_date = $this->getWeekDate(); // 1週間の日付を取得
+    $total_study_time = [];
+
+    foreach ($week_date as $date) { // 1日の合計学習時間を取得
+      $record = Record::NotDraft()->whereDate('learning_date', $date)
+        ->where('user_id', Auth::id())
+        ->groupBy('learning_date')
+        ->select('learning_date', DB::raw('SUM(duration) as total_duration'))
+        ->first();
+
+      if (is_null($record)) {
+        array_push($total_study_time, 0);
+      } else {
+        array_push($total_study_time, $record->total_duration);
+      }
+    }
+    return $total_study_time;
+  }
+
   /**
    * 合計時間を分から時間に変換する
    *
