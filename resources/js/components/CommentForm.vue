@@ -5,6 +5,9 @@
                 <div class="form-group row">
                     <div class="col-md-5">
                         <form @submit.prevent="addComment">
+                            <p class="validation" v-if="addValidationMessage">
+                                {{ addValidationMessage }}
+                            </p>
                             <textarea
                                 rows="4"
                                 cols="50"
@@ -29,6 +32,12 @@
                     </div>
                     <div class="col-md-5">
                         <form @submit.prevent="updateComment(comment, index)">
+                            <p
+                                class="validation"
+                                v-if="comment.editValidationMessage"
+                            >
+                                {{ comment.editValidationMessage }}
+                            </p>
                             <textarea
                                 v-if="isEdit[index]"
                                 rows="2"
@@ -75,7 +84,17 @@ export default {
     data() {
         return {
             commentTextarea: "",
-            comments: [],
+            addValidationMessage: "",
+            comments: [
+                {
+                    pivot: [
+                        {
+                            content: "",
+                        },
+                    ],
+                    editValidationMessage: "",
+                },
+            ],
             isEdit: [],
         };
     },
@@ -87,6 +106,8 @@ export default {
             axios
                 .get(`/comments/${this.recordId}`)
                 .then((response) => {
+                    this.addValidationMessage = "";
+                    this.commentTextarea = "";
                     this.comments = response.data.comments;
                 })
                 .catch((error) => {
@@ -100,14 +121,21 @@ export default {
                     content: this.commentTextarea,
                 })
                 .then((response) => {
-                    this.commentTextarea = "";
                     this.fetchComments();
                 })
                 .catch((error) => {
-                    console.log(error);
+                    if (error.response && error.response.status === 422) {
+                        this.addValidationMessage = error.response.data.message;
+                        console.log(error);
+                    } else {
+                        console.log(error);
+                    }
                 });
         },
         editComment(index) {
+            if (this.isEdit.some((value, idx) => value && idx !== index)) {
+                return;
+            }
             this.isEdit[index] = true;
         },
         updateComment(comment, index) {
@@ -116,11 +144,18 @@ export default {
                     content: comment.pivot.content,
                 })
                 .then((response) => {
-                    this.fetchComments();
+                    this.comments[index].editValidationMessage = "";
                     this.isEdit[index] = false;
+                    this.fetchComments();
                 })
                 .catch((error) => {
-                    console.log(error);
+                    if (error.response && error.response.status === 422) {
+                        this.comments[index].editValidationMessage =
+                            error.response.data.message;
+                        console.log(error);
+                    } else {
+                        console.log(error);
+                    }
                 });
         },
         deleteComment(comment) {

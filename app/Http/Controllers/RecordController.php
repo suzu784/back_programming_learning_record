@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RecordRequest;
 use App\Models\Record;
-use Illuminate\Http\Request;
 use App\Services\RecordService;
 
 class RecordController extends Controller
@@ -57,6 +57,7 @@ class RecordController extends Controller
     /**
      * 学習記録の詳細画面に遷移
      *
+     * @param Record $record 学習記録
      * @return view 学習詳細画面
      */
     public function show(Record $record)
@@ -76,13 +77,14 @@ class RecordController extends Controller
     /**
      * 学習記録を作成してトップページにリダイレクト
      *
+     * @param RecordRequest $recordRequest リクエスト
      * @return redirect トップページ
      */
-    public function store(Request $request)
+    public function store(RecordRequest $recordRequest)
     {
-        $duration = $request->input('duration');
+        $duration = $recordRequest->input('duration');
         $total_minute = $this->record_service->convertHHMMToTotalMinute($duration);
-        $this->record_service->store($request, $total_minute);
+        $this->record_service->store($recordRequest, $total_minute);
         return redirect()->route('top');
     }
 
@@ -99,6 +101,7 @@ class RecordController extends Controller
     /**
      * 学習記録編集フォーム画面に遷移
      *
+     * @param Record $record 学習記録
      * @return view 学習記録編集画面
      */
     public function edit(Record $record)
@@ -116,11 +119,13 @@ class RecordController extends Controller
     /**
      * 学習記録を更新してトップページにリダイレクト
      *
+     * @param RecordRequest $recordRequest リクエスト
+     * @param Record $record 学習記録
      * @return redirect トップページ
      */
-    public function update(Request $request, Record $record)
+    public function update(RecordRequest $recordRequest, Record $record)
     {
-        $this->record_service->update($request, $record);
+        $this->record_service->update($recordRequest, $record);
         return redirect()->route('top');
     }
 
@@ -128,12 +133,12 @@ class RecordController extends Controller
      * 学習記録を削除してトップページにリダイレクト
      *
      * @param Record $record 学習記録
-     * @param Request $request リクエスト
+     * @param RecordRequest $recordRequest リクエスト
      * @return redirect トップページ
      */
-    public function destroy(Request $request, Record $record)
+    public function destroy(RecordRequest $recordRequest, Record $record)
     {
-        $this->record_service->destroyTags($request, $record);
+        $this->record_service->destroyTags($recordRequest, $record);
         $record->delete();
         return redirect()->route('top');
     }
