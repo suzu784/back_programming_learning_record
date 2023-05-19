@@ -20,7 +20,11 @@
         </tr>
         <tr>
           <td>
+            @if(Helper::isWithinMaxCharacters($record->body))
             {{ $record->body }}
+            @else
+            <p>{{ Helper::truncateText($record->body) }}</p>
+            @endif
             <hr>
           </td>
         </tr>
@@ -42,7 +46,11 @@
         </tr>
         <tr>
           <td>
+            @if(Helper::isWithinMaxCharacters($record->body))
             {{ $record->body }}
+            @else
+            <p>{{ Helper::truncateText($record->body) }}</p>
+            @endif
             <hr>
           </td>
         </tr>

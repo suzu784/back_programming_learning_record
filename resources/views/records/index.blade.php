@@ -29,7 +29,11 @@
             @foreach($record->tags as $tag)
             <span>{{ $tag->name }}</span>
             @endforeach
+            @if(Helper::isWithinMaxCharacters($record->body))
             <p>{{ $record->body }}</p>
+            @else
+            <p>{{ Helper::truncateText($record->body) }}</p>
+            @endif
             <hr>
           </td>
         </tr>
