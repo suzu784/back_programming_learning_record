@@ -26,7 +26,7 @@ class RecordRequest extends FormRequest
         return [
             'title' => 'required|max:150',
             'body' => 'required',
-            'learning_date' => 'required|date_format:Y-m-d|after:now|before:"+1 year',
+            'learning_date' => 'required|date_format:Y-m-d|before_or_equal:today|after:"-1 year',
             'duration' => 'required|date_format:H:i|after:00:00',
         ];
     }
@@ -39,6 +39,7 @@ class RecordRequest extends FormRequest
             'body.required' => '学習内容を入力してください',
             'learning_date.required' => '学習日は必要です',
             'learning_date.date_format' => 'Y-m-d形式で入力してください',
+            'learning_date.before_or_equal' => '未来の日付は入力できません',
             'learning_date.after' => '1年以内で入力してください',
             'duration.required' => '学習時間は必要です',
             'duration.date_format' => 'H:i形式で入力してください',
