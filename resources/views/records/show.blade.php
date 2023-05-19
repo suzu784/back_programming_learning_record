@@ -30,7 +30,7 @@
         <span class="card-text">{{ $tag->name}}</span>
         @endforeach
         <p class="card-text">{{ $record->body }}</p>
-        @if(Auth::id() === $record->user_id)
+        @if(Auth::id() === $record->user_id && $record->is_draft === false)
         <div class="mt-3">
           <a href="{{route('chatgpt.getReview', ['record' => $record->id])}}" class="btn btn-primary"
             onclick="showLoadingScreen()"><i class="fas fa-robot"></i>ChatGPTレビュー</a>
@@ -38,7 +38,7 @@
         @endif
       </div>
     </div>
-    <div id="like-button">
+    <div id={{ $record->is_draft === false ? 'like-button' : '' }}>
       <record-like :record-id="@json($record->id)" :initial-is-liked="@json($record->isLikedBy(Auth::user()))"
         :initial-count-likes="@json($record->countLikes())"></record-like>
     </div>
@@ -59,7 +59,7 @@
   </div>
 </div>
 @endif
-<div id="comment-form">
+<div id={{ $record->is_draft === false ? 'comment-form' : '' }}>
   <comment-form :record-id="@json($record->id)"></comment-form>
 </div>
 @endsection
