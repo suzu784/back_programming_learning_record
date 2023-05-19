@@ -25,7 +25,11 @@
             @foreach($draft->tags as $tag)
             <span>{{ $tag->name}}</span>
             @endforeach
+            @if(Helper::isWithinMaxCharacters($draft->body))
             <p>{{ $draft->body }}</p>
+            @else
+            <p>{{ Helper::truncateText($draft->body) }}</p>
+            @endif
             <hr>
           </td>
         </tr>
