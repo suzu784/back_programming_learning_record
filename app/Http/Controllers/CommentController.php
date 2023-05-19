@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Record;
 use App\Models\Comment;
-use Illuminate\Http\Request;
 use App\Services\CommentService;
+use App\Http\Requests\CommentRequest;
 
 class CommentController extends Controller
 {
@@ -38,26 +38,26 @@ class CommentController extends Controller
     /**
      * コメント後に学習記録詳細ページにリダイレクト
      *
-     * @param Request $request リクエスト
+     * @param CommentRequest $commentRequest リクエスト
      * @return redirect 学習記録の詳細ページ
      */
-    public function store(Request $request)
+    public function store(CommentRequest $commentRequest)
     {
-        $record_id = $request->input('recordId');
-        $this->comment_service->store($request, $record_id);
+        $record_id = $commentRequest->input('recordId');
+        $this->comment_service->store($commentRequest, $record_id);
         return redirect()->route('records.show', ['record' => $record_id]);
     }
 
     /**
      * コメント更新後に学習記録詳細ページに遷移
      *
-     * @param Request $request リクエスト
+     * @param CommentRequest $commentRequest リクエスト
      * @param Comment $comment コメント
      * @return void
      */
-    public function update(Request $request, Comment $comment)
+    public function update(CommentRequest $commentRequest, Comment $comment)
     {
-        $comment->fill($request->all())->save();
+        $comment->fill($commentRequest->all())->save();
     }
 
     /**

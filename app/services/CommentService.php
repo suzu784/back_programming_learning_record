@@ -3,23 +3,23 @@
 namespace App\Services;
 
 use App\Models\Comment;
-use Illuminate\Http\Request;
+use App\Http\Requests\CommentRequest;
 
 class CommentService
 {
   /**
    * コメントを生成
    *
-   * @param Request $request リクエスト
+   * @param CommentRequest $commentRequest リクエスト
    * @param Record $record_id 学習記録ID
    * @return void
    */
-  public function store(Request $request, $record_id)
+  public function store(CommentRequest $commentRequest, $record_id)
   {
     Comment::create([
-      'user_id' => $request->user()->id,
+      'user_id' => $commentRequest->user()->id,
       'record_id' => $record_id,
-      'content' => $request->input('content')
+      'content' => $commentRequest->input('content')
     ]);
   }
 }

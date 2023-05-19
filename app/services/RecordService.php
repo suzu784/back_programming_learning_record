@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Requests\RecordRequest;
 use Carbon\Carbon;
 use App\Models\Tag;
 use App\Models\Record;
@@ -196,24 +197,24 @@ class RecordService
   /**
    * 学習記録を作成
    *
-   * @param Request $request リクエスト
+   * @param RecordRequest $recordRequest リクエスト
    * @param $total_minute 合計時間
    * @return void
    */
-  public function store(Request $request, $total_minute)
+  public function store(RecordRequest $recordRequest, $total_minute)
   {
     $record = Record::create([
       'user_id' => Auth::id(),
-      'title' => $request->input('title'),
-      'body' => $request->input('body'),
-      'is_draft' => $request->has('is_draft'),
-      'learning_date' => $request->input('learning_date'),
+      'title' => $recordRequest->input('title'),
+      'body' => $recordRequest->input('body'),
+      'is_draft' => $recordRequest->has('is_draft'),
+      'learning_date' => $recordRequest->input('learning_date'),
       'duration' => $total_minute,
     ]);
 
-    $tag_name = $request->input('tagName');
+    $tag_name = $recordRequest->input('tagName');
     if ($tag_name) {
-      $this->createTags($request, $record);
+      $this->createTags($recordRequest, $record);
     }
   }
 

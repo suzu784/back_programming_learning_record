@@ -9,12 +9,18 @@
                 <div class="col-md-2">
                     <label for="learning_date">学習日:</label>
                     <input type="date" class="form-control" id="learning_date" name="learning_date"
-                        value="{{ old('learning_date', isset($record) ? $record->learning_date : date('Y-m-d')) }}">
+                    value="{{ old('learning_date', isset($record) ? $record->learning_date : date('Y-m-d')) }}">
+                    @if ($errors->first('learning_date'))
+                    <p class="validation">※{{$errors->first('learning_date')}}</p>
+                    @endif
                 </div>
                 <div class="col-md-2">
                     <label for="duration">学習時間:</label>
                     <input type="time" name="duration" id="duration" class="form-control"
-                        value="{{ old('duration', isset($record) ? sprintf('%02d:%02d', $hours, $minutes) : '00:00') }}">
+                    value="{{ old('duration', isset($record) ? sprintf('%02d:%02d', $hours, $minutes) : '00:00') }}">
+                    @if ($errors->first('duration'))
+                    <p class="validation">※{{$errors->first('duration')}}</p>
+                    @endif
                 </div>
                 <div class="col-md-8">
                     <label for="tagName">タグ:</label>
@@ -30,14 +36,18 @@
             </div>
             <div class="form-group row mt-3">
                 <div class="col-md-12">
+                    @if ($errors->first('title'))
+                    <p class="validation">※{{$errors->first('title')}}</p>
+                    @endif
                     <input type="text" name="title" id="title" class="form-control"
                         value="{{ old('title', isset($record) ? $record->title : '') }}" placeholder="タイトルを入力してください。">
                 </div>
             </div>
             <div class="form-group mt-3">
-                <div id="text-area-modal">
-                    {{ old('body', isset($record) ? $record->body : '') }}
-                </div>
+                @if ($errors->first('body'))
+                <span class="validation">※{{$errors->first('body')}}</span>
+                @endif
+                <div id="text-area-modal"></div>
             </div>
             <div class="form-group mt-3">
                 <div class="d-grid gap-2">
