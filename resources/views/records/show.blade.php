@@ -1,11 +1,11 @@
 @extends('layouts.app')
 @section('content')
-<div class="row justify-content-center">
-  <div class="col-md-9 col-lg-8">
+<div class="row">
+  <div class="col-md-8 col-lg-7 offset-md-1">
     <div class="card">
       <div class="card-header">
         <div class="d-flex justify-content-between">
-          <span>{{ $record->title }}</span>
+          <h3>{{ $record->title }}</h3>
           <div>
             <a href="{{ route('records.edit', $record->id) }}" class="btn btn-success"><i class="fas fa-edit"></i></a>
             <form action="{{ route('records.destroy', $record->id) }}" method="POST" style="display:inline">
@@ -21,46 +21,38 @@
         </div>
       </div>
       <div class="card-body">
-        <p class="card-text">
-          {{ $record->learning_date }}
-          {{ $record->user->name }} さん
-        </p>
+        <h4 class="card-text">{{ $record->user->name }} さん</h4>
+        <p class="card-text mt-3">学習日：{{ $record->learning_date }}</p>
         <p class="card-text">学習時間：{{ $hours }} 時間 {{ $minutes }} 分</p>
+        <hr>
         @foreach($record->tags as $tag)
         <span class="card-text">{{ $tag->name}}</span>
         @endforeach
-        <p class="card-text">{{ $record->body }}</p>
-        @if(Auth::id() === $record->user_id && $record->is_draft === false)
-        <div class="mt-3">
-          <a href="{{route('chatgpt.getReview', ['record' => $record->id])}}" class="btn btn-primary"
-            onclick="showLoadingScreen()"><i class="fas fa-robot"></i>ChatGPTレビュー</a>
+        <div id="post-content">
+          <post-content :initial-record-body="{{ json_encode($record->body) }}"></post-content>
         </div>
+        @include('records.loading')
+        @if(isset($generated_text))
+        <hr>
+        <p class="card-text">ChatGPTによるレビュー</p>
+        <p class="card-text">{{ $generated_text }}</p>
         @endif
       </div>
-    </div>
-    <div id={{ $record->is_draft === false ? 'like-button' : '' }}>
-      <record-like :record-id="@json($record->id)" :initial-is-liked="@json($record->isLikedBy(Auth::user()))"
-        :initial-count-likes="@json($record->countLikes())"></record-like>
-    </div>
-  </div>
-</div>
-@include('records.loading')
-@if(isset($generated_text))
-<div class="row mt-5">
-  <div class="col-md-5 offset-md-2">
-    <div class="card">
-      <div class="card-header">
-        <h1 class="card-title">ChatGPTによるレビュー</h1>
-      </div>
-      <div class="card-body">
-        <p class="card-text">{{ $generated_text }}</p>
+      <div id={{ $record->is_draft === false ? 'like-button' : '' }}>
+        <record-like :record-id="@json($record->id)" :initial-is-liked="@json($record->isLikedBy(Auth::user()))"
+          :initial-count-likes="@json($record->countLikes())"></record-like>
       </div>
     </div>
+    @if(Auth::id() === $record->user_id && $record->is_draft === false)
+    <a href="{{route('chatgpt.getReview', ['record' => $record->id])}}" class="btn btn-primary"
+      onclick="showLoadingScreen()"><i class="fas fa-robot"></i>ChatGPTレビュー</a>
+    @endif
   </div>
-</div>
-@endif
-<div id={{ $record->is_draft === false ? 'comment-form' : '' }}>
-  <comment-form :record-id="@json($record->id)"></comment-form>
+  <div class="col-lg-3 offset-lg-1">
+    <div id={{ $record->is_draft === false ? 'comment-form' : '' }}>
+      <comment-form :record-id="@json($record->id)"></comment-form>
+    </div>
+  </div>
 </div>
 @endsection
 

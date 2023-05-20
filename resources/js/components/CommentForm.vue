@@ -1,75 +1,53 @@
 <template>
-    <div>
-        <div class="row mt-5 justify-content-center">
-            <div class="col-md-10 col-lg-9 offset-lg-1">
-                <div class="form-group row">
-                    <div class="col-md-5">
-                        <form @submit.prevent="addComment">
-                            <p class="validation" v-if="addValidationMessage">
-                                {{ addValidationMessage }}
-                            </p>
-                            <textarea
-                                rows="4"
-                                cols="50"
-                                class="form-control"
-                                v-model="commentTextarea"
-                            ></textarea>
-                            <button type="submit" class="btn btn-success">
-                                コメント
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <h3>コメント欄</h3>
+    <div class="form-group">
+        <form @submit.prevent="addComment">
+            <p class="validation" v-if="addValidationMessage">
+                {{ addValidationMessage }}
+            </p>
+            <textarea
+                rows="4"
+                cols="150"
+                class="form-control"
+                v-model="commentTextarea"
+            ></textarea>
+            <button type="submit" class="btn btn-success">コメント</button>
+        </form>
     </div>
-    <div>
-        <div class="row mt-5 justify-content-center">
-            <div class="col-md-10 col-lg-9 offset-lg-1">
-                <div v-for="(comment, index) in comments" :key="index.id">
-                    <div v-if="!isEdit[index]">
-                        {{ comment.pivot.content }}
-                    </div>
-                    <div class="col-md-5">
-                        <form @submit.prevent="updateComment(comment, index)">
-                            <p
-                                class="validation"
-                                v-if="comment.editValidationMessage"
-                            >
-                                {{ comment.editValidationMessage }}
-                            </p>
-                            <textarea
-                                v-if="isEdit[index]"
-                                rows="2"
-                                cols="50"
-                                class="form-control"
-                                v-model="comment.pivot.content"
-                            ></textarea>
-                            <button
-                                v-if="!isEdit[index]"
-                                class="btn btn-primary"
-                                @click="editComment(index)"
-                            >
-                                編集
-                            </button>
-                            <button
-                                v-if="isEdit[index]"
-                                type="submit"
-                                class="btn btn-primary"
-                            >
-                                更新
-                            </button>
-                            <button
-                                class="btn btn-danger"
-                                @click="deleteComment(comment)"
-                            >
-                                削除
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
+    <div v-for="(comment, index) in comments" :key="index.id">
+        <div v-if="!isEdit[index]">
+            {{ comment.pivot.content }}
         </div>
+        <hr>
+            <form @submit.prevent="updateComment(comment, index)">
+                <p class="validation" v-if="comment.editValidationMessage">
+                    {{ comment.editValidationMessage }}
+                </p>
+                <textarea
+                    v-if="isEdit[index]"
+                    rows="4"
+                    cols="150"
+                    class="form-control"
+                    v-model="comment.pivot.content"
+                ></textarea>
+                <button
+                    v-if="!isEdit[index]"
+                    class="btn btn-primary"
+                    @click="editComment(index)"
+                >
+                    編集
+                </button>
+                <button
+                    v-if="isEdit[index]"
+                    type="submit"
+                    class="btn btn-primary"
+                >
+                    更新
+                </button>
+                <button class="btn btn-danger" @click="deleteComment(comment)">
+                    削除
+                </button>
+            </form>
     </div>
 </template>
 
