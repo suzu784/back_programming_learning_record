@@ -1,4 +1,5 @@
 import "./bootstrap";
+import "./fontawesome";
 import "chartkick/chart.js";
 import { createApp } from "vue";
 import Vuex from "vuex";
