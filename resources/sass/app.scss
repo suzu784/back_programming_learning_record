@@ -7,6 +7,12 @@
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
 
+// Google Fonts
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+JP');
+
+// フォント
+@import './font.scss';
+
 // バリデーション
 @import './validation.scss';
 
