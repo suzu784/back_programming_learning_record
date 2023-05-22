@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\RecordRequest;
 use App\Models\Record;
+use Illuminate\Http\Request;
 use App\Services\RecordService;
+use App\Http\Requests\RecordRequest;
 
 class RecordController extends Controller
 {
@@ -42,11 +43,12 @@ class RecordController extends Controller
     /**
      * 学習記録一覧画面に遷移
      *
+     * @param Request $request リクエスト
      * @return view 学習記録一覧画面
      */
-    public function index()
+    public function index(Request $request)
     {
-        $records = $this->record_service->index();
+        $records = $this->record_service->index($request);
         return view('records.index', compact('records'));
     }
 
