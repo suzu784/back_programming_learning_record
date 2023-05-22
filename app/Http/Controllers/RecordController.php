@@ -31,7 +31,7 @@ class RecordController extends Controller
         $total_study_time = $this->record_service->getTotalStudyTime();
 
         $return_array = [];
-        for($i = 0; $i < 7; $i++) {
+        for ($i = 0; $i < 7; $i++) {
             $return_array[$learning_date[$i]] = $total_study_time[$i];
         }
         return [
@@ -47,11 +47,7 @@ class RecordController extends Controller
     public function index()
     {
         $records = $this->record_service->index();
-        if ($records === null) {
-            return view('records.index')->with('message', '学習記録がありません');
-        } else {
-            return view('records.index', compact('records'));
-        }
+        return view('records.index', compact('records'));
     }
 
     /**
