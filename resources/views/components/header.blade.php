@@ -1,10 +1,9 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm"
-    style="min-height: 100%; width: 145px; position: fixed; top: 0; left: 0;">
+<nav class="navbar navbar-expand-lg navbar-light bg-info shadow-sm" id="navbar">
     <div class="container">
-        <a class="navbar-brand" href="{{ url('/') }}" style="position: fixed; top: 30px;">
+        <a class="navbar-brand" href="{{ url('/') }}" id="navar-brand">
             ブログアプリ
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>
         </button>
