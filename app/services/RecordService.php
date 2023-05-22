@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
+use function PHPUnit\Framework\isEmpty;
+
 class RecordService
 {
   /**
@@ -186,11 +188,21 @@ class RecordService
   /**
    * 学習記録一覧を取得
    *
+   * @param Request $request リクエスト
    * @return $records 学習記録一覧
    */
-  public function index()
+  public function index(Request $request)
   {
-    $records = Record::NotDraft()->orderBy('created_at', 'desc')->paginate(8);
+    $keyword = $request->input('keyword');
+    $query = Record::query();
+    if (!empty($keyword)) {
+      $query->where('title', 'LIKE', '%' . $keyword . '%')
+        ->orWhere('body', 'LIKE', '%' . $keyword . '%')
+        ->orWhereHas('user', function ($query) use ($keyword) {
+          $query->where('name', 'LIKE', '%' . $keyword . '%');
+        });
+    }
+    $records = $query->NotDraft()->orderBy('created_at', 'desc')->paginate(8);
     return $records;
   }
 
