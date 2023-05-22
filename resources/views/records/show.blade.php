@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
-<div class="row">
-  <div class="col-md-8 col-lg-7 offset-md-1">
+<div class="row justify-content-center">
+  <div class="col-md-8 col-lg-6 offset-md-2">
     <div class="card">
       <div class="card-header">
         <div class="d-flex justify-content-between">
@@ -48,9 +48,10 @@
       onclick="showLoadingScreen()"><i class="fas fa-robot"></i>ChatGPTレビュー</a>
     @endif
   </div>
-  <div class="col-lg-3 offset-lg-1">
+  <div class="col-md-7 col-lg-3 offset-md-1">
     <div id={{ $record->is_draft === false ? 'comment-form' : '' }}>
-      <comment-form :record-id="@json($record->id)"></comment-form>
+      <comment-form :record-id="@json($record->id)" :user-id="@json(Auth::id())">
+      </comment-form>
     </div>
   </div>
 </div>
