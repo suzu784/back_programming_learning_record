@@ -15,39 +15,46 @@
         </form>
     </div>
     <div v-for="(comment, index) in comments" :key="index.id">
-        <div v-if="!isEdit[index]">
-            {{ comment.pivot.content }}
-        </div>
-        <hr>
-            <form @submit.prevent="updateComment(comment, index)">
-                <p class="validation" v-if="comment.editValidationMessage">
-                    {{ comment.editValidationMessage }}
-                </p>
-                <textarea
-                    v-if="isEdit[index]"
-                    rows="4"
-                    cols="150"
-                    class="form-control"
-                    v-model="comment.pivot.content"
-                ></textarea>
-                <button
-                    v-if="!isEdit[index]"
-                    class="btn btn-primary"
-                    @click="editComment(index)"
-                >
-                    編集
-                </button>
-                <button
-                    v-if="isEdit[index]"
-                    type="submit"
-                    class="btn btn-primary"
-                >
-                    更新
-                </button>
-                <button class="btn btn-danger" @click="deleteComment(comment)">
-                    削除
-                </button>
-            </form>
+        <form @submit.prevent="updateComment(comment, index)">
+            <p class="validation" v-if="comment.editValidationMessage">
+                {{ comment.editValidationMessage }}
+            </p>
+            <textarea
+                v-if="isEdit[index]"
+                rows="4"
+                cols="150"
+                class="form-control"
+                v-model="comment.pivot.content"
+            ></textarea>
+            <div v-if="!isEdit[index]" class="d-flex justify-content-between">
+                <span>{{ comment.pivot.content }}</span>
+                <div>
+                    <button
+                        v-if="!isEdit[index] && isAuthorized(index)"
+                        class="btn btn-primary"
+                        @click="editComment(index)"
+                    >
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    &nbsp;
+                    <button
+                        v-if="!isEdit[index] && isAuthorized(index)"
+                        class="btn btn-danger"
+                        @click="deleteComment(comment)"
+                    >
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+            <hr v-if="!isEdit[index]" />
+            <button
+                v-if="isEdit[index] && isAuthorized(index)"
+                type="submit"
+                class="btn btn-primary"
+            >
+                更新
+            </button>
+        </form>
     </div>
 </template>
 
@@ -58,6 +65,10 @@ export default {
             type: Number,
             required: true,
         },
+        userId: {
+            type: Number,
+            required: true,
+        },
     },
     data() {
         return {
@@ -65,11 +76,7 @@ export default {
             addValidationMessage: "",
             comments: [
                 {
-                    pivot: [
-                        {
-                            content: "",
-                        },
-                    ],
+                    pivot: [],
                     editValidationMessage: "",
                 },
             ],
@@ -78,6 +85,14 @@ export default {
     },
     mounted() {
         this.fetchComments();
+    },
+    computed: {
+        isAuthorized() {
+            return (index) => {
+                const comment = this.comments[index];
+                return comment.pivot.user_id === this.userId;
+            };
+        },
     },
     methods: {
         fetchComments() {
