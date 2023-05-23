@@ -8,7 +8,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav flex-column">
+            <ul class="navbar-nav flex-column text-end">
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('top') }}">学習記録一覧</a>
                 </li>
