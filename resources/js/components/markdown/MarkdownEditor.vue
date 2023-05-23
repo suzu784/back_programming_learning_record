@@ -24,9 +24,14 @@ export default {
     components: {
         Modal,
     },
+    props: {
+        initialRecordBody: {
+            type: String,
+        },
+    },
     data() {
         return {
-            textareaValue: "",
+            textareaValue: this.initialRecordBody,
             md: new MarkdownIt({
                 html: true,
                 linkify: true,

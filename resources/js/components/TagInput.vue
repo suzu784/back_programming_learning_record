@@ -21,6 +21,11 @@ export default {
     components: {
         Vue3TagsInput,
     },
+    props: {
+        tagName: {
+            type: Array,
+        },
+    },
     data() {
         return {
             tags: [],
@@ -28,6 +33,11 @@ export default {
     },
     computed: {
         tagsJson() {
+            if(this.tagName[0]) {
+                this.tagName[0].forEach((element) => {
+                    this.tags.push(element.name);
+                });
+            }
             return this.tags;
         },
     },
