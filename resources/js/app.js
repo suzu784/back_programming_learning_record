@@ -34,11 +34,15 @@ const store = new Vuex.Store({
     },
 });
 
-const textareaElement = document.querySelector("#text-area-modal");
-if (textareaElement) {
-    const textareaApp = createApp(Textarea);
-    textareaApp.use(store);
-    textareaApp.mount("#text-area-modal");
+const textareaModalElement = document.querySelector("#textarea-modal");
+if (textareaModalElement) {
+    const TextareaModalApp = async () => {
+        const textareaModalApp = createApp({});
+        textareaModalApp.component("textarea-modal", Textarea);
+        textareaModalApp.use(store);
+        textareaModalApp.mount("#textarea-modal");
+    }
+    TextareaModalApp();
 }
 
 const likeButtonElement = document.querySelector("#like-button");
@@ -63,8 +67,12 @@ if (commentFormElement) {
 
 const tagInputElement = document.querySelector("#tag-input");
 if (tagInputElement) {
-    const tagInputApp = createApp(TagInput);
-    tagInputApp.mount("#tag-input");
+    const TagInputApp = async () => {
+        const tagInputApp = createApp({});
+        tagInputApp.component("tag-input", TagInput);
+        tagInputApp.mount("#tag-input");
+    }
+    TagInputApp();
 }
 
 const studyAnalyticsElement = document.querySelector("#study-analytics");

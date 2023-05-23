@@ -1,7 +1,7 @@
 <template>
     <div>
         <tab @tab-changed="handleTabChanged"/>
-        <markdown-editor v-show="type === 'write'" />
+        <markdown-editor :initial-record-body=initialRecordBody v-show="type === 'write'" />
         <markdown-preview v-show="type === 'preview'" />
     </div>
 </template>
@@ -16,6 +16,11 @@ export default {
         Tab,
         MarkdownEditor,
         MarkdownPreview,
+    },
+    props: {
+        initialRecordBody: {
+            type: String,
+        },
     },
     data() {
         return {
