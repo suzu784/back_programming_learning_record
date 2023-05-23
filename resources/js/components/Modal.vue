@@ -31,15 +31,17 @@
                         ></button>
                     </div>
                     <div class="modal-body">
-                        <button
-                            v-for="template in templates"
-                            :key="template"
-                            type="button"
-                            class="btn btn-outline-primary mb-3"
-                            @click="selectTemplate(template)"
-                        >
-                            {{ template }}
-                        </button>
+                        <div class="d-flex flex-column">
+                            <button
+                                v-for="template in templates"
+                                :key="template"
+                                type="button"
+                                class="btn btn-white mt-3 text-start"
+                                @click="selectTemplate(template)"
+                            >
+                                {{ template }}
+                            </button>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button

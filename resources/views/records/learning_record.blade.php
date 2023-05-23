@@ -1,5 +1,5 @@
 <div class="row justify-content-center">
-  <div class="col-sm-12 col-md-11 col-lg-10 offset-lg-1">
+  <div class="col-sm-12 col-md-11 col-lg-10 offset-lg-2">
     <h1 class="mb-4">{{ $hasRecordsTitle ? '学習記録一覧' : ''}}</h1>
     @if(($hasRecordsTitle))
     @include('records.search')
