@@ -51,7 +51,7 @@
             </div>
             <div class="form-group mt-3">
                 <div class="d-grid gap-2">
-                    <button type="submit" class="btn btn-info">{{ isset($record) ? '更新' : '投稿' }}</button>
+                    <button type="submit" class="btn btn-info">{{ isset($record) && !$record->is_draft ? '更新' : '投稿' }}</button>
                     @if(isset($record) && $record->is_draft === true)
                     <button type="submit" name="is_draft" class="btn btn-secondary">下書き保存</button>
                     @elseif(!isset($record))
