@@ -21,6 +21,18 @@
 <body>
     <x-header></x-header>
     <div class="container">
+
+        <!-- フラッシュメッセージ -->
+        @if (session('msg_success'))
+        <div class="row">
+            <div class="col-md-7 col-lg-6 offset-lg-1">
+                <div class="alert alert-success text-center">
+                    {{ session('msg_success') }}
+                </div>
+            </div>
+        </div>
+        @endif
+
         <div id="app">
             <main class="py-4">
                 @yield('content')
