@@ -52,7 +52,7 @@
   </div>
   <div class="col-md-7 col-lg-3 offset-md-1">
     <div id={{ $record->is_draft === false ? 'comment-form' : '' }}>
-      <comment-form :record-id="@json($record->id)" :user-id="@json(Auth::id())">
+      <comment-form :record-id="@json($record->id)" :user-id="@json(Auth::id())" :authorized="@json(Auth::check())">
       </comment-form>
     </div>
   </div>
