@@ -29,6 +29,7 @@ Route::resource('/records', RecordController::class)->except(['index', 'show'])-
 Route::resource('/records', RecordController::class)->only('show');
 
 // テンプレート
+Route::resource('/templates', TemplateController::class)->only('create', 'store')->middleware('auth');
 Route::get('/api/templates', [TemplateController::class, 'index'])->name('templates.index')->middleware('auth');
 
 // ChatGPT
