@@ -11,7 +11,9 @@
                 class="form-control"
                 v-model="commentTextarea"
             ></textarea>
-            <button type="submit" class="btn btn-success">コメント</button>
+            <button type="submit" class="btn btn-primary">
+                <i class="fa-solid fa-paper-plane"></i>
+            </button>
         </form>
     </div>
     <div v-for="(comment, index) in comments" :key="index.id">
@@ -69,6 +71,10 @@ export default {
             type: Number,
             required: true,
         },
+        authorized: {
+            type: Boolean,
+            default: false,
+        },
     },
     data() {
         return {
@@ -108,6 +114,11 @@ export default {
                 });
         },
         addComment() {
+            if (!this.authorized) {
+                alert("コメント機能はログイン中のみ使用できます");
+                this.commentTextarea = "";
+                return;
+            }
             axios
                 .post("/records/comments", {
                     recordId: this.recordId,
