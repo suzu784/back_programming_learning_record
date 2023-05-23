@@ -6,6 +6,7 @@
       <div class="card-header">
         <div class="d-flex justify-content-between">
           <h3>{{ $record->title }}</h3>
+          @if(Auth::id() === $record->user_id)
           <div>
             <a href="{{ route('records.edit', $record->id) }}" class="btn btn-success"><i class="fas fa-edit"></i></a>
             <form action="{{ route('records.destroy', $record->id) }}" method="POST" style="display:inline">
@@ -18,6 +19,7 @@
                   class="fas fa-trash"></i></button>
             </form>
           </div>
+          @endif
         </div>
       </div>
       <div class="card-body">
