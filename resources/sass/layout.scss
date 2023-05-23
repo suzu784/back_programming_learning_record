@@ -2,8 +2,14 @@ body {
     font-family: "Noto Sans JP";
 }
 
+@media(max-width: 990px) {
+    body {
+        padding: 100px;
+    }
+}
+
 #navbar {
-    height: 100px
+    height: 100px;
 }
 
 @media (min-width: 990px) {

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-info shadow-sm" id="navbar">
+<nav class="navbar navbar-expand-lg navbar-light bg-info fixed-top" id="navbar">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}" id="navar-brand">
             ブログアプリ
