@@ -23,7 +23,7 @@
         <tr>
           <td>
             @foreach($draft->tags as $tag)
-            <span>{{ $tag->name}}</span>
+            <span class="tag-name">{{ $tag->name}}</span>
             @endforeach
             @if(Helper::isWithinMaxCharacters($draft->body))
             <p>{{ $draft->body }}</p>

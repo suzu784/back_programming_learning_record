@@ -28,7 +28,7 @@
         <p class="card-text">学習時間：{{ $hours }} 時間 {{ $minutes }} 分</p>
         <hr>
         @foreach($record->tags as $tag)
-        <span class="card-text">{{ $tag->name}}</span>
+        <span class="card-text tag-name">{{ $tag->name}}</span>
         @endforeach
         <div id="post-content">
           <post-content :initial-record-body="{{ json_encode($record->body) }}"></post-content>
