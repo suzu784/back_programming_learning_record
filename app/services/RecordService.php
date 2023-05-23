@@ -11,10 +11,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
-use function PHPUnit\Framework\isEmpty;
-
 class RecordService
 {
+  public $flash_message;
+
+  /**
+   * 学習記録サービスクラスのコンストラクタ
+   */
+  public function __construct()
+  {
+      $this->flash_message = null;
+  }
+  
   /**
    * 1週間の日付を取得
    *
@@ -116,6 +124,16 @@ class RecordService
     } else {
       return null;
     }
+  }
+
+  /**
+   * フラッシュメッセージを取得
+   *
+   * @return $flash_message フラッシュメッセージ
+   */
+  public function getFlashMessage()
+  {
+      return $this->flash_message;
   }
 
   /**
@@ -224,6 +242,12 @@ class RecordService
       'duration' => $total_minute,
     ]);
 
+    if($recordRequest->has('is_draft')) {
+      $this->flash_message = '下書きを保存しました';
+    } else {
+      $this->flash_message = '学習を記録しました';
+    }
+
     $tag_name = $recordRequest->input('tagName');
     if ($tag_name) {
       $this->createTags($recordRequest, $record);
@@ -256,9 +280,11 @@ class RecordService
     }
 
     if ($request->has('is_draft')) { // 下書き保存の場合
+      $this->flash_message = '下書きを保存しました';
       return;
     }
-    $record->is_draft = false; // 更新の場合
+    $record->is_draft = false; // 学習を記録する場合
     $record->save();
+    $this->flash_message = '学習を記録しました';
   }
 }

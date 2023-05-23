@@ -50,6 +50,6 @@ class TemplateController extends Controller
     public function store(Request $request)
     {
         $this->template_service->store($request);
-        return redirect()->route('top');
+        return redirect()->route('top')->with('msg_success', 'テンプレートを登録しました');
     }
 }

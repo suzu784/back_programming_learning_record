@@ -25,8 +25,8 @@
         <!-- フラッシュメッセージ -->
         @if (session('msg_success'))
         <div class="row">
-            <div class="col-md-7 col-lg-6 offset-lg-1">
-                <div class="alert alert-success text-center">
+            <div class="col-sm-5 col-md-4 col-lg-3 offset-lg-1">
+                <div class="alert alert-success">
                     {{ session('msg_success') }}
                 </div>
             </div>

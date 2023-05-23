@@ -83,7 +83,8 @@ class RecordController extends Controller
         $duration = $recordRequest->input('duration');
         $total_minute = $this->record_service->convertHHMMToTotalMinute($duration);
         $this->record_service->store($recordRequest, $total_minute);
-        return redirect()->route('top');
+        $flash_message = $this->record_service->getFlashMessage();
+        return redirect()->route('top')->with('msg_success', $flash_message);
     }
 
     /**
@@ -124,7 +125,8 @@ class RecordController extends Controller
     public function update(RecordRequest $recordRequest, Record $record)
     {
         $this->record_service->update($recordRequest, $record);
-        return redirect()->route('top');
+        $flash_message = $this->record_service->getFlashMessage();
+        return redirect()->route('top')->with('msg_success', $flash_message);
     }
 
     /**
