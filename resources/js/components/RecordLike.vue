@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="mt-1">
         <button v-if="isLiked" @click="unlikeRecord" class="btn liked">
             <i class="fas fa-heart"></i>
         </button>
@@ -25,6 +25,10 @@ export default {
             type: Number,
             default: 0,
         },
+        authorized: {
+            type: Boolean,
+            default: false,
+        },
     },
     data() {
         return {
@@ -34,6 +38,10 @@ export default {
     },
     methods: {
         likeRecord() {
+            if (!this.authorized) {
+                alert("いいね機能はログイン中のみ使用できます");
+                return;
+            }
             axios
                 .put(`/records/${this.recordId}/like`)
                 .then((response) => {
@@ -45,6 +53,10 @@ export default {
                 });
         },
         unlikeRecord() {
+            if (!this.authorized) {
+                alert("いいね機能はログイン中のみ使用できます");
+                return;
+            }
             axios
                 .delete(`/records/${this.recordId}/unlike`)
                 .then((response) => {
