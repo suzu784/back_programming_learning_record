@@ -40,15 +40,17 @@
         <p class="card-text">{{ $generated_text }}</p>
         @endif
       </div>
+    </div>
+    <div class="d-flex justify-content-start mt-2">
+      @if(Auth::id() === $record->user_id && $record->is_draft === false)
+      <a href="{{route('chatgpt.getReview', ['record' => $record->id])}}" class="btn btn-primary"
+        onclick="showLoadingScreen()"><i class="fas fa-robot"></i>ChatGPTレビュー</a>
+      @endif
       <div id={{ $record->is_draft === false ? 'like-button' : '' }}>
         <record-like :record-id="@json($record->id)" :initial-is-liked="@json($record->isLikedBy(Auth::user()))"
-          :initial-count-likes="@json($record->countLikes())"></record-like>
+          :initial-count-likes="@json($record->countLikes())" :authorized="@json(Auth::check())"></record-like>
       </div>
     </div>
-    @if(Auth::id() === $record->user_id && $record->is_draft === false)
-    <a href="{{route('chatgpt.getReview', ['record' => $record->id])}}" class="btn btn-primary"
-      onclick="showLoadingScreen()"><i class="fas fa-robot"></i>ChatGPTレビュー</a>
-    @endif
   </div>
   <div class="col-md-7 col-lg-3 offset-md-1">
     <div id={{ $record->is_draft === false ? 'comment-form' : '' }}>
