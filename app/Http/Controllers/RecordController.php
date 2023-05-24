@@ -136,10 +136,10 @@ class RecordController extends Controller
      * @param RecordRequest $recordRequest リクエスト
      * @return redirect トップページ
      */
-    public function destroy(RecordRequest $recordRequest, Record $record)
+    public function destroy(Request $request, Record $record)
     {
-        $this->record_service->destroyTags($recordRequest, $record);
+        $this->record_service->destroyTags($request, $record);
         $record->delete();
-        return redirect()->route('top');
+        return redirect()->route('top')->with('msg_success', '学習記録を削除しました');
     }
 }
