@@ -1,6 +1,6 @@
 <template>
     <div>
-        <p class="card-text" v-html="renderedBody"></p>
+        <p class="card-text mt-3" v-html="renderedBody"></p>
     </div>
 </template>
 
