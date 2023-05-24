@@ -28,7 +28,7 @@
                 class="form-control"
                 v-model="comment.pivot.content"
             ></textarea>
-            <div v-if="!isEdit[index]" class="d-flex justify-content-between">
+            <div v-if="!isEdit[index]" class="d-flex justify-content-between mt-5">
                 <span>{{ comment.pivot.content }}</span>
                 <div>
                     <button

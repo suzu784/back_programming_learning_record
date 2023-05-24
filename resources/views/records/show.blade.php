@@ -23,21 +23,27 @@
         </div>
       </div>
       <div class="card-body">
-        <h4 class="card-text">{{ $record->user->name }} さん</h4>
-        <p class="card-text mt-3">学習日：{{ $record->learning_date }}</p>
-        <p class="card-text">学習時間：{{ $hours }} 時間 {{ $minutes }} 分</p>
+        <div class="d-flex justify-content-between">
+          <div>
+            @foreach($record->tags as $tag)
+            <span class="card-text tag-name">{{ $tag->name}}</span>
+            @endforeach
+          </div>
+          <div>
+            <span class="card-text mt-3">学習日：{{ $record->learning_date }}</span>
+            <p class="card-text">学習時間：{{ $hours }} 時間 {{ $minutes }} 分</p>
+          </div>
+        </div>
         <hr>
-        @foreach($record->tags as $tag)
-        <span class="card-text tag-name">{{ $tag->name}}</span>
-        @endforeach
+        <a href="{{ route('users.showRecords', ['user' => $record->user->id])}}" class="card-text h5">{{
+          $record->user->name }}</a><span class="h5">さんの投稿&ensp;({{ substr($record->created_at, 0, 10) }})</span>
         <div id="post-content">
           <post-content :initial-record-body="{{ json_encode($record->body) }}"></post-content>
         </div>
         @include('records.loading')
         @if(isset($generated_text))
-        <hr>
-        <p class="card-text">ChatGPTによるレビュー</p>
-        <p class="card-text">{{ $generated_text }}</p>
+        <h5 class="card-text mt-5 text-danger"><i class="fas fa-robot"></i>&nbsp;ChatGPTレビュー</h5>
+        <p class="card-text mt-4">{{ $generated_text }}</p>
         @endif
       </div>
     </div>
