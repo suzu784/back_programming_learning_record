@@ -13,6 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
+        Schema::create('users', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('goal')->nullable();
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->rememberToken();
+            $table->timestamps();
+        });
+        
         Schema::create('records', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id')->unsigned();
@@ -28,7 +39,7 @@ return new class extends Migration
         Schema::create('chat_g_p_t_s', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('record_id')->unsigned();
-            $table->foreign('record_id')->references('id')->on('records');
+            $table->foreign('record_id')->references('id')->on('records')->cascadeOnDelete();
             $table->text('content');
             $table->timestamps();
         });
@@ -38,7 +49,7 @@ return new class extends Migration
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->bigInteger('record_id')->unsigned();
-            $table->foreign('record_id')->references('id')->on('records');
+            $table->foreign('record_id')->references('id')->on('records')->cascadeOnDelete();
             $table->timestamps();
         });
 
@@ -47,7 +58,7 @@ return new class extends Migration
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->bigInteger('record_id')->unsigned();
-            $table->foreign('record_id')->references('id')->on('records');
+            $table->foreign('record_id')->references('id')->on('records')->cascadeOnDelete();
             $table->text('content');
             $table->timestamps();
         });
@@ -61,7 +72,7 @@ return new class extends Migration
         Schema::create('tag_records', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('record_id')->unsigned();
-            $table->foreign('record_id')->references('id')->on('records');
+            $table->foreign('record_id')->references('id')->on('records')->cascadeOnDelete();
             $table->bigInteger('tag_id')->unsigned();
             $table->foreign('tag_id')->references('id')->on('tags');
             $table->timestamps();
@@ -90,5 +101,7 @@ return new class extends Migration
         Schema::dropIfExists('tag_records');
         Schema::dropIfExists('tags');
         Schema::dropIfExists('records');
+        Schema::dropIfExists('templates');
+        Schema::dropIfExists('users');
     }
 };
