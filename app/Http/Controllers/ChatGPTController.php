@@ -3,21 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Record;
-use App\Services\ChatGPTService;
+use App\Services\ChatGPTServiceInterface;
 use Illuminate\Http\Request;
 
 class ChatGPTController extends Controller
 {
-    public ChatGPTService $chat_gpt_service;
+    public $chat_gpt_service;
 
     /**
      * ChatGPTサービスクラスのコンストラクタ
      *
      * @param ChatGPTService $chat_gpt_service ChatGPTサービスクラス
      */
-    public function __construct(ChatGPTService $chat_gpt_service)
+    public function __construct(ChatGPTServiceInterface $chatGPTServiceInterface)
     {
-        $this->chat_gpt_service = $chat_gpt_service;
+        $this->chat_gpt_service = $chatGPTServiceInterface;
     }
 
     /**
