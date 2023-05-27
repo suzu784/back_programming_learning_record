@@ -2,11 +2,12 @@
 
 namespace App\Services;
 
-use App\Models\ChatGPT;
 use App\Models\Record;
 use GuzzleHttp\Client;
+use App\Models\ChatGPT;
+use App\Services\ChatGPTServiceInterface;
 
-class ChatGPTService
+class ChatGPTService implements ChatGPTServiceInterface
 {
   /**
    * ChatGPTによるレビューを生成
