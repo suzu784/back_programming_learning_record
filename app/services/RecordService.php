@@ -20,9 +20,9 @@ class RecordService
    */
   public function __construct()
   {
-      $this->flash_message = null;
+    $this->flash_message = null;
   }
-  
+
   /**
    * 1週間の日付を取得
    *
@@ -133,7 +133,7 @@ class RecordService
    */
   public function getFlashMessage()
   {
-      return $this->flash_message;
+    return $this->flash_message;
   }
 
   /**
@@ -227,59 +227,59 @@ class RecordService
   /**
    * 学習記録を作成
    *
-   * @param RecordRequest $recordRequest リクエスト
+   * @param RecordRequest $record_request リクエスト
    * @param $total_minute 合計時間
    * @return void
    */
-  public function store(RecordRequest $recordRequest, $total_minute)
+  public function store(RecordRequest $record_request, $total_minute)
   {
     $record = Record::create([
       'user_id' => Auth::id(),
-      'title' => $recordRequest->input('title'),
-      'body' => $recordRequest->input('body'),
-      'is_draft' => $recordRequest->has('is_draft'),
-      'learning_date' => $recordRequest->input('learning_date'),
+      'title' => $record_request->input('title'),
+      'body' => $record_request->input('body'),
+      'is_draft' => $record_request->has('is_draft'),
+      'learning_date' => $record_request->input('learning_date'),
       'duration' => $total_minute,
     ]);
 
-    if($recordRequest->has('is_draft')) {
+    if ($record_request->has('is_draft')) {
       $this->flash_message = '下書きを保存しました';
     } else {
       $this->flash_message = '学習を記録しました';
     }
 
-    $tag_name = $recordRequest->input('tagName');
+    $tag_name = $record_request->input('tagName');
     if ($tag_name) {
-      $this->createTags($recordRequest, $record);
+      $this->createTags($record_request, $record);
     }
   }
 
   /**
    * 学習記録を更新
    *
-   * @param Request $request リクエスト
+   * @param RecordRequest $record_request リクエスト
    * @param Record $record 学習記録
    * @return void
    */
-  public function update(Request $request, Record $record)
+  public function update(RecordRequest $record_request, Record $record)
   {
-    $duration = $request->input('duration');
+    $duration = $record_request->input('duration');
     $total_minute = $this->convertHHMMToTotalMinute($duration);
-    $record->fill(array_merge($request->except('is_draft'), ['duration' => $total_minute]))->save();
+    $record->fill(array_merge($record_request->except('is_draft'), ['duration' => $total_minute]))->save();
 
-    $tag_id = $request->input('tagId');
-    $tag_name = $request->input('tagName');
+    $tag_id = $record_request->input('tagId');
+    $tag_name = $record_request->input('tagName');
     if ($tag_id) { // タグが存在する場合
       if (is_null($tag_name)) {
-        $this->destroyTags($request, $record);
+        $this->destroyTags($record_request, $record);
         return;
       }
-      $this->updateTags($request, $record);
+      $this->updateTags($record_request, $record);
     } elseif ($tag_name) { // タグが存在しない場合
-      $this->createTags($request, $record);
+      $this->createTags($record_request, $record);
     }
 
-    if ($request->has('is_draft')) { // 下書き保存の場合
+    if ($record_request->has('is_draft')) { // 下書き保存の場合
       $this->flash_message = '下書きを保存しました';
       return;
     }

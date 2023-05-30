@@ -118,13 +118,13 @@ class RecordController extends Controller
     /**
      * 学習記録を更新してトップページにリダイレクト
      *
-     * @param RecordRequest $recordRequest リクエスト
+     * @param RecordRequest $record_request リクエスト
      * @param Record $record 学習記録
      * @return redirect トップページ
      */
-    public function update(RecordRequest $recordRequest, Record $record)
+    public function update(RecordRequest $record_request, Record $record)
     {
-        $this->record_service->update($recordRequest, $record);
+        $this->record_service->update($record_request, $record);
         $flash_message = $this->record_service->getFlashMessage();
         return redirect()->route('top')->with('msg_success', $flash_message);
     }
@@ -133,7 +133,7 @@ class RecordController extends Controller
      * 学習記録を削除してトップページにリダイレクト
      *
      * @param Record $record 学習記録
-     * @param RecordRequest $recordRequest リクエスト
+     * @param Request $request リクエスト
      * @return redirect トップページ
      */
     public function destroy(Request $request, Record $record)
