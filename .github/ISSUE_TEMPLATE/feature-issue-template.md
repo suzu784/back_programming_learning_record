@@ -1,3 +1,12 @@
+---
+name: Feature issue template
+about: Describe this issue template's purpose here.
+title: ''
+labels: ''
+assignees: ''
+
+---
+
 ## What
 
 > これは何？この機能について説明してください。
