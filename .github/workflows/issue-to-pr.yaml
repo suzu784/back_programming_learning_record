@@ -30,9 +30,6 @@ jobs:
       - name: Install Codex CLI
         run: npm install -g @openai/codex
 
-      - name: Setup faketty
-        uses: Yuri6037/Action-FakeTTY@v1.1
-
       - name: Generate patch with Codex
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
@@ -49,7 +46,7 @@ jobs:
 
           PROMPT="$(printf '%s\\n\\n%s\\n%s\\n' "${{ github.event.issue.title }}" "${{ github.event.issue.body }}" "最後に\`npm ci && npm run build\`を実行してエラーが出ないことを確認してください。 .gitのような'.'から始まるファイル、フォルダの中身は絶対に変更しないでください。")"
           
-          faketty codex --ask-for-approval never -- "$PROMPT"
+          codex exec --full-auto "$PROMPT"
 
           if [[ -n $(git status --porcelain) ]]; then
             git add .
