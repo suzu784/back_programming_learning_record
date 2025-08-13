@@ -42,18 +42,12 @@ jobs:
           BRANCH="codex/issue-${{ github.event.issue.number }}"
           git switch -c "$BRANCH"
 
-          PROMPT_FILE=codex-prompt.txt
-          {
-            echo "${{ github.event.issue.title }}"
-            echo
-            echo "${{ github.event.issue.body }}"
-            echo
-            echo "最後に \`npm ci && npm run build\` を実行してエラーが出ないことを確認してください。"
-            echo "dotfiles（.git 等）配下は絶対に変更しないでください。"
-          } > "$PROMPT_FILE"
+          PROMPT="$(printf '%s\n\n%s\n%s\n' \
+          "${{ github.event.issue.title }}" \
+          "${{ github.event.issue.body }}" \
+          "最後に\`npm ci && npm run build\`を実行してエラーが出ないことを確認してください。 .gitのような'.'から始まるファイル、フォルダの中身は絶対に変更しないでください。")"
 
-          # 非対話＆TTY不要モードで実行（承認フローなし）
-          codex --ask-for-approval auto -- "$(cat "$PROMPT_FILE")"
+          codex --ask-for-approval never -- "$PROMPT"
 
           if [[ -n $(git status --porcelain) ]]; then
             git add -A
