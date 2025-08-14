@@ -40,9 +40,9 @@ jobs:
           if [ -d "node_modules" ]; then
             rm -rf node_modules
           fi
-          if [ -f "package-lock.json" ]; then
-            rm package-lock.json
-          fi
+          # if [ -f "package-lock.json" ]; then
+            # rm package-lock.json
+          # fi
 
           PROMPT="$(printf '%s\\n\\n%s\\n%s\\n' "${{ github.event.issue.title }}" "${{ github.event.issue.body }}" "最後に\`npm ci && npm run build\`を実行してエラーが出ないことを確認してください。 .gitのような'.'から始まるファイル、フォルダの中身は絶対に変更しないでください。")"
           
